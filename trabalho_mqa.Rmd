@@ -1,0 +1,74 @@
+---
+title: "Análise da precificação de casas nos EUA"
+output: html_document
+date: "2023-09-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+  # instalando pacotes caso necessario ===========================================
+
+if(!require(dplyr)) install.packages("dplyr")
+if(!require(ggplot2)) install.packages("ggplot2")
+
+# carregando pacotes ===========================================================
+
+library(dplyr)
+library(ggplot2)
+
+# lendo dataframe ==============================================================
+
+df <- read.csv("./kc_house_data.csv")
+
+# contando os dados N/A ========================================================
+
+comprimento_df <- length(df)
+qtd_na <- NULL
+
+for(i in 1 : comprimento_df) {
+  
+  aux_cont_na <- sum(is.na(df[i]))
+  qtd_na <- c(qtd_na, aux_cont_na)
+  
+}
+
+qtd_na <- as.data.frame(qtd_na, row.names = colnames(df))
+View(qtd_na) # DATAFRAME NAO POSSUI NENHUM DADO FALTANTE
+
+```
+
+# Análise da precificação de casas nos EUA
+
+## ANOVA
+
+```{r}
+
+df$condition = factor(df$condition) 
+
+model <- aov(price ~ condition, data = df)
+summary(model)
+```
+
+### Teste de Tukey
+
+Analisa os dados dois a dois...
+
+```{r}
+TukeyHSD(model, "condition", ordered= TRUE)
+```
+
+## Regressão linear
+
+```{r}
+model <- lm(price ~ bedrooms, data = df)
+summary(model)
+
+ggplot(df, aes(x=bedrooms, y=price)) + geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color = "blue") + 
+  labs(x = "Bedrooms", y = "Price") + ggtitle("Regressão linear")
+
+plot(model)
+```

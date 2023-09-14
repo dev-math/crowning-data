@@ -1,0 +1,55 @@
+---
+title: "Análise da precificação de casas nos EUA"
+author:
+  - Ana Beatriz
+  - Andre Palacio
+  - Lucas Garcia
+  - Matheus Salermo
+  - Matheus Rocha
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Seleção do dataset
+Escolhemos o conjunto de dados do Kaggle: [House Sales in King County, USA](https://www.kaggle.com/datasets/harlfoxem/housesalesprediction). Esse dataset contém preços de venda de casas em King County, um condado dos Estados Unidos que inclui a cidade de Seattle, entre maio de 2014 e maio de 2015.
+
+## Alguns preparos
+Antes de começar a análise precisamos de algumas bibliotecas para facilitar nosso trabalho:
+```{r, results = 'hide'}
+# Instala (se necessário) e carrega as bibliotecas usadas
+load <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg))
+    install.packages(new.pkg, dependencies = TRUE)
+  sapply(pkg, require, character.only = TRUE)
+} 
+
+packages <- c("tidyverse")
+load(packages)
+```
+
+Agora vamos carregar nosso dataset:
+```{r}
+df <- read.csv("./kc_house_data.csv")
+```
+
+## Visão geral dos dados
+Vamos entender um pouco sobre o conjunto de dados escolhido. O dataset abrange uma variedade de características residenciais, como o número de quartos em cada casa, a área das casas e dos terrenos, a presença de vista para a água, a condição das casas, a classificação atribuída pelo condado, os anos de construção e de renovação, além da localização das casas.
+
+Para começar vamos dar uma olhada no tamanho desse conjunto de dados:
+```{r}
+glimpse(df)
+```
+Como você pode ver o dataset tem 21.613 registros mensurados com 21 diferentes variáveis.
+
+Para manter as coisas mais organizadas vou apagar o atributo `id` do dataset.
+```{r, results='hide'}
+drop("id")
+```
+
+```{r}
+
+```
