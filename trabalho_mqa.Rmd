@@ -68,7 +68,7 @@ summary(model)
 
 ggplot(df, aes(x=bedrooms, y=price)) + geom_point() + 
   geom_smooth(method = "lm", se = FALSE, color = "blue") + 
-  labs(x = "Bedrooms", y = "Price") + ggtitle("Regressão linear")
+  labs(x = "bedrooms", y = "Price") + ggtitle("Regressão linear")
 
 plot(model)
 ```
